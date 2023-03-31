@@ -29,29 +29,9 @@
     <script>
 
         const ws = new WebSocket('ws://127.0.0.1:8000/ac/')
-        
-        {% comment %} ws.onopen = function (e){
-            console.log("Connected Successfully.");
-        }; {% endcomment %}
-
-        {% comment %} ws.onmessage = function (e){
-            var data = JSON.parse(e.data);
-            var div = document.createElement("div");
-            div.innerHTML = data.username : data.message;
-            document.querySelector("#id_message_send_input").value = "";
-            document.querySelector("#id_chat_item_container").appendChild(div);
-        }; {% endcomment %}
 
         ws.onmessage = function (e){
             var dataset = JSON.parse(e.data);
-            //console.log(dataset.message)
-            //console.log(dataset.username)
-            //var message = dataset['message'];
-            //var username = dataset['username'];
-            //console.log(message)
-            //console.log(username)
-            //document.getElementById('id_chat_item_container')= message
-
             var div = document.createElement("div");
             div.innerHTML = dataset.username + " : " + dataset.message
             document.querySelector("#id_message_send_input").value = "";
@@ -66,15 +46,10 @@
         document.querySelector("#id_message_send_input").focus();
         document.querySelector("#id_message_send_input").onkeyup = function (e){
             if (e.keyCode == 13) {
-                //document.querySelector("id_message_send_button").click();
                 document.getElementById('id_message_send_button').click();
             }
         };
 
-        {% comment %} document.querySelector("id_message_send_button").onclick = function (e){
-            var messageInput = document.querySelector("#id_message_send_input").value;
-            ws.send(JSON.stringify({message:messageInput, username:"{{request.user.username}}"}));
-        }; {% endcomment %}
         document.getElementById('id_message_send_button').onclick = function (e){
             var messageInput = document.getElementById("id_message_send_input").value;
             ws.send(JSON.stringify({message:messageInput, username:"{{request.user.first_name}}"}));
