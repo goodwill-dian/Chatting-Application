@@ -8,8 +8,11 @@ class ChatBox(viewsets.ModelViewSet):
     def chat_page(self, request):
         if not request.user.is_authenticated:
             return redirect('log_in')
-        context = {}
-        return render(request, 'chat/chat.html', context)
+        # print(request.user.first_name)
+        name_user = request.user.first_name
+        context = {name_user:None}
+        return render(request, 'index_frontend.html', context)
+        # return render(request, 'chat/index.html', context)
 
 class LogIn(viewsets.ModelViewSet):
     def log_in(self, request):

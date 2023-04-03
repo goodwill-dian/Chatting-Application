@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Box</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="websocket_js"></script>
+</head>
+<body>
+
+    <section id="msger">
+      <header id="msger-header">
+        <div id="msger-header-title">
+          Chat BOX
+        </div>
+
+      </header>
+
+
+
+                  <main id="msger-chat" style="background-image: url('images/background.jpg');">
+
+                    <div id="msg-box">
+                        <div id="msg-img"
+                            style="background-image: url('images/U1.png')"
+                        ></div>
+
+                        <div id="msg-bubble">
+                            <div id="id_chat_item_container">
+                            </div>
+                        </div>
+                    </div>
+
+                  </main>
+
+
+
+      <form id="id_message_inputarea">
+        <input type="text" id="id_message_send_input" placeholder="Enter your message">
+        <button type="submit" id="id_message_send_button">Send</button>
+      </form>
+    </section>
+
+
+    <button id="log-out">
+      <a href = "#logout">Logout Chat BOX</a>
+    </button>
+
+</body>
+</html>
