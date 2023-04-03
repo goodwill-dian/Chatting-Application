@@ -27,21 +27,20 @@ class MyAsyncConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)                                  #loads() = json --to--> string
         
         message = text_data_json['message']
-        # username = text_data_json['username']
+        username = text_data_json['username']
         
         await self.channel_layer.group_send(
             self.roomGroupName,{
                 "type" : "sendMessage" ,
                 "message" : message ,
-                # "username" : username ,
+                "username" : username ,
             })
         
     async def sendMessage(self, event):
         print("inside sendmessage")
         message = event["message"]
-        # username = event["username"]
-        print(self.request.user.first_name)
+        username = event["username"]
         
-        await self.send(text_data = json.dumps({'message':message, 'username':self.request.user.first_name}))             #dumps() = string --to--> json
+        await self.send(text_data = json.dumps({'message':message, 'username':username}))             #dumps() = string --to--> json
 
 
