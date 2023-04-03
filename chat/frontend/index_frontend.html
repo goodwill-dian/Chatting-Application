@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +7,89 @@
   <title>Chat Box</title>
 
   <style>
+
+    /*html{
+      background-color: #DFD5D5;
+    }
+
+    *,
+    *:before,
+    *:after {
+      margin: 0;
+      padding: 0;
+      box-sizing: inherit;
+    }
+
+    #msger {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 5px solid black;
+      margin-top: 40px;
+      margin-left: 300px;
+      height: 500px;
+      width: 700px;
+      background-color: whitesmoke;
+      font-family: Helvetica, sans-serif;
+    }
+
+    #msger-header-title {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: var(--border);
+      background: #eee;
+      color: black;
+    }
+
+    #msger-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: var(--border);
+      background: #eee;
+      color: black;
+    }
+    
+    #msger-chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    #msg {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 10px;
+    }
+
+    #msg-bubble {
+      max-width: 450px;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    #id_message_inputarea {
+      display: flex;
+      padding: 10px;
+      border: 2px solid #ddd;
+      background: #eee;
+    }
+    #id_message_inputarea *{
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      font-size: 1em;
+    }
+    #id_message_send_input {
+      flex: 1;
+      background: #ddd;
+    }
+    #id_message_send_button {
+      margin-left: 10px;
+      background: rgb(0, 196, 65);
+      color: #fff;
+    }*/
 
     :root {
       --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -47,7 +131,7 @@
       border: var(--border);
       border-radius: 5px;
       background: var(--msger-bg);
-      /* box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0#2); */
+
     }
     
     #msger-header {
@@ -85,22 +169,8 @@
       max-width: 450px;
       padding: 15px;
       border-radius: 8px;
-      background: var(--left-msg-bg);
     }
-    #msg-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    #msg-info-name {
-      margin-right: 10px;
-      font-weight: bold;
-    }
-    
-    #right-msg {
-      flex-direction: row-reverse;
-    }
+
   
     #right-msg #msg-img {
       margin: 0 0 0 10px;
@@ -130,17 +200,20 @@
     
     #msger-chat {
       background-color: #fcfcfe;
-      background-image: url('images/background#jpg')
     }
     
+    #log-out {
+      background-color: rgb(0, 196, 65);
+      padding: 10px;
+      color: white;
+    }
 
 
   </style>
-  <!-- <link rel="stylesheet" src="style.css">
-  <script src="websocket_js.js"></script> -->
-</head>
-<body>
 
+</head>
+
+<body>
     <section id="msger">
       <header id="msger-header">
         <div id="msger-header-title">
@@ -150,33 +223,28 @@
       </header>
 
 
+          <main id="msger-chat">
 
-                  <main id="msger-chat" style="background-image: url('images/background.jpg');">
+            <div id="msg-box">
 
-                    <div id="msg-box">
-                        <!-- <div id="msg-img"
-                            style="background-image: url('images/U1.png')"
-                        ></div> -->
-
-                        <div id="msg-bubble">
-                            <div id="id_chat_item_container">
-                            </div>
-                        </div>
+                <div id="msg-bubble">
+                    <div id="id_chat_item_container">
                     </div>
+                </div>
+            </div>
 
-                  </main>
+          </main>
 
 
-
-      <form id="id_message_inputarea">
+      <div id="id_message_inputarea">
         <input type="text" id="id_message_send_input" placeholder="Enter your message">
         <button type="submit" id="id_message_send_button">Send</button>
-      </form>
+      </div>
     </section>
 
 
-    <button id="log-out">
-      Logout Chat BOX
+    <button type="submit" id="log-out">
+      <a href="logout/">Logout Chat BOX</a>
     </button>
 
 
@@ -188,19 +256,20 @@
       ws.onmessage = function (e){
           var dataset = JSON.parse(e.data);
           var div = document.createElement("div");
-          // div.innerHTML = dataset.username + " : " + dataset.message
+          div.innerHTML = dataset.username + " : " + dataset.message
           div.innerHTML = dataset.message
+          console.log(dataset.message)
           document.querySelector("#id_message_send_input").value = "";
           document.querySelector("#id_chat_item_container").appendChild(div)
       
       }
       
       ws.onclose = function (e){
-          console.log("Connected Closed.");
+          console.log("Connection Closed.");
       };
       
-      document.querySelector("#id_message_send_input").focus();
-      document.querySelector("#id_message_send_input").onkeyup = function (e){
+      document.getElementById("id_message_send_input").focus();
+      document.getElementById("id_message_send_input").onkeyup = function (e){
           if (e.keyCode == 13) {
               document.getElementById('id_message_send_button').click();
           }
@@ -208,6 +277,8 @@
       
       document.getElementById('id_message_send_button').onclick = function (e){
           var messageInput = document.getElementById("id_message_send_input").value;
+          console.log("inside on click event handler")
+          console.log(context['username'])
           // ws.send(JSON.stringify({message:messageInput, username:"{{request.user.first_name}}"}));
           ws.send(JSON.stringify({message:messageInput}));
       }
