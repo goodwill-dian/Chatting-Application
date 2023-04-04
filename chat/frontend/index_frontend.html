@@ -191,6 +191,20 @@
           document.querySelector("#id_chat_item_container").appendChild(div)
       
       }
+
+      ws.onopen = function (e){
+        fetch('http://127.0.0.1:8000/get-old-chat/')
+        .then(response => response.json())
+        .then(data => {
+            var obj = JSON.parse(data)
+            for(let i=0; i<obj.length; i++){
+              var div = document.createElement("div");
+              div.innerHTML = obj[i].sender + " : " + obj[i].message
+              document.querySelector("#id_message_send_input").value = "";
+              document.querySelector("#id_chat_item_container").appendChild(div)
+            }
+        });
+      }
       
       ws.onclose = function (e){
           console.log("Connection Closed.");
@@ -210,7 +224,6 @@
           fetch('http://127.0.0.1:8000/get-data/')
           .then(response => response.json())
           .then(data => {
-              //console.log(data)
               var obj = JSON.parse(data)
               ws.send(JSON.stringify({message:messageInput, username:obj.username, firstname:obj.firstname}));
               //console.log(obj.firstname);

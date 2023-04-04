@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import LoginUserForm
 
 import json
+from .models import Messagge
 
 
 class ChatBox(viewsets.ModelViewSet):
@@ -21,16 +22,27 @@ class ChatBox(viewsets.ModelViewSet):
         
 
 def get_data(request):
-    # data = {
-    #     'firstname': request.user.first_name,
-    #     'lastname': request.user.last_name,
-    # }
     data = {
         'username': request.user.username,
         'firstname': request.user.first_name,
         'lastname': request.user.last_name,
     }
-    # print(data)
+    return JsonResponse(json.dumps(data), safe=False)
+
+
+def get_old_chat(request):
+    # data_obj = Messagge.objects.filter(sender__username=request.user.username).order_by('send_time')
+    # data_obj = Messagge.objects.filter().first()
+    data_obj = Messagge.objects.all().order_by('send_time')
+    
+    data = []
+    for i in data_obj:
+        data_dict = {
+            'sender':i.sender.first_name,
+            'message':i.context
+        }
+        data.append(data_dict)
+
     return JsonResponse(json.dumps(data), safe=False)
 
 

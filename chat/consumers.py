@@ -45,27 +45,23 @@ class MyAsyncConsumer(AsyncWebsocketConsumer):
         username = text_data_json['username']
         firstname = text_data_json['firstname']
         
-        # obj = await self.save_chat(message, username)
+        obj = await self.save_chat(message, username)
         
         await self.channel_layer.group_send(
             self.roomGroupName,{
                 "type" : "sendMessage" ,
                 "message" : message ,
-                "username" : username ,
                 "firstname" : firstname ,
             })
         
     async def sendMessage(self, event):
         print("inside sendmessage")
         message = event["message"]
-        username = event["username"]
         firstname = event["firstname"]
         
-        obj = await self.save_chat(message, username)
+        # obj = await self.save_chat(message, username)
         
-        if obj:
-            print("if condition satisfied")
-            await self.send(text_data = json.dumps({'message':message, 'firstname':firstname}))     #dumps() = json object --to--> string of json type
+        await self.send(text_data = json.dumps({'message':message, 'firstname':firstname}))     #dumps() = json object --to--> string of json type
 
 
 # class MyAsyncConsumer(AsyncWebsocketConsumer):
