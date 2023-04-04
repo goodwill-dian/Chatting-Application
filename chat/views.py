@@ -21,7 +21,12 @@ class ChatBox(viewsets.ModelViewSet):
         
 
 def get_data(request):
+    # data = {
+    #     'firstname': request.user.first_name,
+    #     'lastname': request.user.last_name,
+    # }
     data = {
+        'username': request.user.username,
         'firstname': request.user.first_name,
         'lastname': request.user.last_name,
     }
