@@ -3,7 +3,7 @@ import os
 import django
 from channels.db import database_sync_to_async
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chat_application.settings')
-django.setup()
+django.setup() 
 
 
 from channels.consumer import AsyncConsumer, SyncConsumer
